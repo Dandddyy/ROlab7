@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:complexType name="palyerType">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Country" type="xs:string"/>
+            <xs:element name="Position" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="teamType">
+        <xs:sequence>
+            <xs:element name="Id" type="xs:integer"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="Country" type="xs:string"/>
+            <xs:element name="Player" type="palyerType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="footballType">
+        <xs:sequence>
+            <xs:element name="Team" type="teamType" maxOccurs="unbounded">
+                <xs:unique name="uniqueid">
+                    <xs:selector xpath="Player"/>
+                    <xs:field xpath="Id"/>
+                </xs:unique>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="Football" type="footballType">
+        <xs:unique name="uniqueId">
+            <xs:selector xpath="Team"/>
+            <xs:field xpath="Id"/>
+        </xs:unique>
+    </xs:element>
+
+</xs:schema>
